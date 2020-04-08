@@ -1,8 +1,0 @@
-com\dao\MemberDao.class
-com\dao\UserDao.class
-com\dao\OrdersDao.class
-com\dao\PermissionDao.class
-com\dao\SysLogDao.class
-com\dao\ProductDao.class
-com\dao\RoleDao.class
-com\dao\TravellerDao.class
