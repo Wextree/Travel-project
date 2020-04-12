@@ -23,7 +23,7 @@ public interface OrdersDao {
             @Result(column = "payType",property = "payType"),
             @Result(column = "orderDesc",property = "orderDesc"),
             @Result(column = "productId", property = "product", one = @One(
-                    select = "com.dao.ProductDao.findById"))
+                    select = "com.dao.ProductDao.findByIdTwo"))
     })
     public List<Orders> findAllOrders();
 

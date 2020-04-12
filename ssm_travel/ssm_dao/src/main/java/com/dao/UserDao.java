@@ -13,13 +13,11 @@ public interface UserDao {
      * @param username
      * @return
      */
-    @Select("select * from users where username=#{username}")
+    @Select("select id,username,password,STATUS from users where username=#{username}")
     @Results({
             @Result(id = true, column = "id", property = "id"),
             @Result(column = "username", property = "username"),
-            @Result(column = "email", property = "email"),
             @Result(column = "password", property = "password"),
-            @Result(column = "phoneNum", property = "phoneNum"),
             @Result(column = "status", property = "status"),
             @Result(property = "roles", column = "id", javaType = java.util.List.class, many = @Many(
                     select = "com.dao.RoleDao.findRoleByUserId"))
@@ -30,7 +28,7 @@ public interface UserDao {
      * 查询所有用户信息
      * @return
      */
-    @Select("select * from users")
+    @Select("select id,username,email,phoneNum,status from users")
     public List<UserInfo> findAllUser();
 
     /**
@@ -46,14 +44,9 @@ public interface UserDao {
      * @param id
      * @return
      */
-    @Select("select * from users where id = #{id}")
+    @Select("select username from users where id = #{id}")
     @Results({
-            @Result(id = true, column = "id", property = "id"),
             @Result(column = "username", property = "username"),
-            @Result(column = "email", property = "email"),
-            @Result(column = "password", property = "password"),
-            @Result(column = "phoneNum", property = "phoneNum"),
-            @Result(column = "status", property = "status"),
             @Result(property = "roles", column = "id", javaType = java.util.List.class, many = @Many(
                     select = "com.dao.RoleDao.findRoleByUserId"))
     })

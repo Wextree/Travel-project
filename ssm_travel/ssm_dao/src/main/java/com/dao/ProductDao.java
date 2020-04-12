@@ -29,4 +29,12 @@ public interface ProductDao {
      */
     @Select("select * from product where id=#{id}")
     public Product findById(Integer id);
+
+    /**
+     * 根据id查询产品
+     * @param id
+     * @return
+     */
+    @Select("select productName,productPrice from product where id=#{id}")
+    public Product findByIdTwo(Integer id);
 }

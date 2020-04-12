@@ -2,7 +2,7 @@
 SSM学习完的一个练手小项目
 旅游开发网项目
 
-STAR
+##STAR
 
 S：刚学完ssm框架之后进行一次复习回顾，并且学习一些新的知识点
 
@@ -14,7 +14,7 @@ R：基本完成了页面的显示和运行。
 
 
 
-issue
+##issue
 
 1. 权限控制时，需要返回一个user类，但是我自己定义了一个user类，发生了冲突，然后一直没办法调用：改名。
 2. user参数，password前加{noop}，角色要用列表。
@@ -22,3 +22,46 @@ issue
 4. 日期输入的格式转换。
 5. 没有用principal获取当前用户名。
 6. 多表操作。
+
+
+
+## 数据库优化
+
+>由于数据库表比较小，而且字段少，所以暂时先按照sql语句的优化和建立索引两种方式进行
+
+
+
+1. 订单列表展示产品相关信息时对投影的*改为具体的列，但由于之后有其他功能也调用这个接口，所以重新分离出一个接口。
+
+```mysql
+-- java/com/dao/ProductDao
+-- 原来的引用以及查询语句
+@Result(column = "productId", property = "product", one = @One(
+                    select = "com.dao.ProductDao.findById"))
+select productName,productPrice from product where id = #{id}
+
+-- 改动后
+select productName,productPrice from product where id = #{id}
+```
+
+2. 同理改动security获取用户名密码等的sql语句。
+
+```mysql
+-- java/com/dao/UserDao
+-- 原来
+select * from users where username=#{username}
+select * from users
+select username from users where id = #{id}
+
+-- 改动后
+select id,username,password,STATUS from users where username=#{username}
+select id,username,email,phoneNum,status from users
+select username from users where id = #{id}
+```
+
+3. 为username建立一个普通索引
+
+```sql
+create index in_name on users(username);
+```
+
